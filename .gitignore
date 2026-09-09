@@ -1,0 +1,47 @@
+# ==========================================
+# 1. Entorno y Secretos 
+# ==========================================
+# Ignora las variables de entorno para no exponer contraseñas de BD
+.env
+
+# ==========================================
+# 2. Java / Spring Boot (Microservicios)
+# ==========================================
+# Ignora las carpetas de compilación de Maven de cada microservicio
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Ignora los wrappers de Maven (útil para no saturar el repo)
+.mvn/
+mvnw
+mvnw.cmd
+hs_err_pid*
+
+# ==========================================
+# 3. Frontend (Angular / Node / pnpm)
+# ==========================================
+# Ignora dependencias y compilados cuando agregues la carpeta del frontend
+node_modules/
+dist/
+.angular/
+npm-debug.log
+pnpm-debug.log
+.pnpm-store/
+
+# ==========================================
+# 4. IDEs y Entornos de Desarrollo
+# ==========================================
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# ==========================================
+# 5. Archivos del Sistema Operativo
+# ==========================================
+.DS_Store
+Thumbs.db
