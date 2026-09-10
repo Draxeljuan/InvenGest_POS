@@ -8,6 +8,7 @@ import com.invengest.auth.domain.model.User;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @RequiredArgsConstructor
 public class LoginUseCase {
@@ -30,7 +31,7 @@ public class LoginUseCase {
         }
 
         // Actualizar la fecha de último acceso
-        user.setUltimoAcceso(LocalDateTime.now());
+        user.setUltimoAcceso(LocalDateTime.now(ZoneId.of("UTC")));
         userRepository.save(user);
 
         // Generar y retornar el token JWT seguro con el rol del usuario

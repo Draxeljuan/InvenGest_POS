@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class Role {
 
-    private Long idRol;
+    private Integer idRol;
     private String nombre; // Ej: Administrador, Vendedor
 
 
