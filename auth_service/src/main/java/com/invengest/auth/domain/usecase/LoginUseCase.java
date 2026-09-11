@@ -18,7 +18,7 @@ public class LoginUseCase {
     private final TokenProviderGateway tokenProvider;
 
     /**
-     * Orquesta el flujo principal y alternativo del CU-01: Iniciar Sesión
+     * Orquesta el flujo principal y alternativo de Iniciar Sesión
      */
     public String execute(String username, String rawPassword) {
         // Buscar el usuario en la base de datos
@@ -27,7 +27,7 @@ public class LoginUseCase {
 
         // Validar que la contraseña digitada coincida con el hash de la BD
         if (!passwordEncoder.matches(rawPassword, user.getContrasena())) {
-            throw new InvalidCredentialsException("Usuario o contraseña incorrectos"); // Flujo Alternativo 3a[cite: 1]
+            throw new InvalidCredentialsException("Usuario o contraseña incorrectos");
         }
 
         // Actualizar la fecha de último acceso
