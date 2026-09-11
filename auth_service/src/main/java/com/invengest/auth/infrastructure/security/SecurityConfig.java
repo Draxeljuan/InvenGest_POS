@@ -20,6 +20,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Permitir acceso público al endpoint de login
                         .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("api/auth/register").permitAll() // Temporal para primeros usuarios
                         // Cualquier otra petición requerirá autenticación
                         .anyRequest().authenticated()
                 );
