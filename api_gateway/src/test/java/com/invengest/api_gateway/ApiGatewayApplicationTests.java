@@ -1,10 +1,10 @@
-package com.invengest.auth;
+package com.invengest.api_gateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AuthServiceApplicationTests {
+class ApiGatewayApplicationTests {
 
     @Test
     void contextLoads() {
