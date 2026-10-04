@@ -9,15 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Proveedor {
-
-    private Integer idProveedor;
-    private EstadoProveedor idEstado;
+public class EstadoProveedor {
+    private Integer idEstado;
     private String nombre;
-    private String telefono;
-    private String email;
-    private String direccion;
-    private String nit;
-
-
 }

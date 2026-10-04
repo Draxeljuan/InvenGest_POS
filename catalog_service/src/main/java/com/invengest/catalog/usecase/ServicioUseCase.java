@@ -1,7 +1,7 @@
 package com.invengest.catalog.usecase;
 
 import com.invengest.catalog.domain.exception.EntityNotFoundException;
-import com.invengest.catalog.domain.gateway.ServicioRepository;
+import com.invengest.catalog.domain.gateway.ServicioGateway;
 import com.invengest.catalog.domain.model.Servicio;
 import lombok.RequiredArgsConstructor;
 
@@ -10,37 +10,37 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ServicioUseCase {
 
-    private final ServicioRepository servicioRepository;
+    private final ServicioGateway servicioGateway;
 
     public Servicio registrar(Servicio servicio) {
-        return servicioRepository.save(servicio);
+        return servicioGateway.save(servicio);
     }
 
     public Servicio actualizar(Servicio servicio) {
-        if (servicio.getIdServicio() == null || servicioRepository.findById(servicio.getIdServicio()).isEmpty()) {
+        if (servicio.getIdServicio() == null || servicioGateway.findById(servicio.getIdServicio()).isEmpty()) {
             throw new EntityNotFoundException("El servicio a actualizar no existe.");
         }
-        return servicioRepository.save(servicio);
+        return servicioGateway.save(servicio);
     }
 
     public List<Servicio> obtenerTodos() {
-        return servicioRepository.findAll();
+        return servicioGateway.findAll();
     }
 
     public Servicio obtenerPorId(Integer idServicio) {
-        return servicioRepository.findById(idServicio)
+        return servicioGateway.findById(idServicio)
                 .orElseThrow(() -> new EntityNotFoundException("Servicio no encontrado con ID: " + idServicio));
     }
 
     public List<Servicio> obtenerPorCategoria(Integer idCategoriaServicio) {
-        return servicioRepository.findByCategoriaServicioId(idCategoriaServicio);
+        return servicioGateway.findByCategoriaServicioId(idCategoriaServicio);
     }
 
     public void eliminarPorId(Integer idServicio) {
 
-        if (servicioRepository.findById(idServicio).isEmpty()) {
+        if (servicioGateway.findById(idServicio).isEmpty()) {
             throw new EntityNotFoundException("El servicio no existe.");
         }
-        servicioRepository.deleteById(idServicio);
+        servicioGateway.deleteById(idServicio);
     }
 }

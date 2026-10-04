@@ -4,7 +4,7 @@ import com.invengest.catalog.domain.model.Producto;
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductoRepository {
+public interface ProductoGateway {
     Optional<Producto> findById(String idProducto);
     List<Producto> findAll();
     List<Producto> findBySearchCriteria(String query); // Búsqueda por múltiples criterios

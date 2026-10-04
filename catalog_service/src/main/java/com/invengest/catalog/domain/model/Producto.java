@@ -22,7 +22,7 @@ public class Producto {
     private Integer stock;
     private Integer stockMinimo;
     private String ubicacion;
-    private String estado;
+    private EstadoProducto idEstado;
 
 
 }

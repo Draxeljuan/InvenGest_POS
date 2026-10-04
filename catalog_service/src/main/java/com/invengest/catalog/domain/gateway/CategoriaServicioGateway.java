@@ -4,7 +4,7 @@ import com.invengest.catalog.domain.model.CategoriaServicio;
 import java.util.List;
 import java.util.Optional;
 
-public interface CategoriaServicioRepository {
+public interface CategoriaServicioGateway {
     Optional<CategoriaServicio> findById(Integer idCategoriaServicio);
     List<CategoriaServicio> findAll();
     CategoriaServicio save(CategoriaServicio categoriaServicio);
