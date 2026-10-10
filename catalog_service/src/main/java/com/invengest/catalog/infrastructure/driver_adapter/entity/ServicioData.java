@@ -3,16 +3,14 @@ package com.invengest.catalog.infrastructure.driver_adapter.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 
 @Entity
-@Data
-@RequiredArgsConstructor
-@NoArgsConstructor
+@lombok.Getter
+@lombok.Setter
+@lombok.NoArgsConstructor
+@lombok.AllArgsConstructor
 @Table(name = "servicio")
 public class ServicioData {
     @NotNull
@@ -27,10 +25,10 @@ public class ServicioData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_servicio", nullable = false)
-    private Integer id;
+    private Integer idServicio;
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_categoria_servicio", nullable = false)
-    private CategoriaServicioData idCategoriaServicio;
+    private CategoriaServicioData categoriaServicio;
 
 }

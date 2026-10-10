@@ -36,12 +36,13 @@ public class CategoriaServicioUseCase {
     }
 
     public void eliminarPorId(Integer id) {
-        if (categoriaServicioGateway.findById(id).isEmpty()) {
-            throw new EntityNotFoundException("La categoría de servicio no existe.");
-        }
+        categoriaServicioGateway.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("La categoría de servicio no existe."));
+
         if (categoriaServicioGateway.existsServiciosByCategoriaServicioId(id)) {
             throw new EntityInUseException("No se puede eliminar la categoría porque contiene servicios vinculados.");
         }
+
         categoriaServicioGateway.deleteById(id);
     }
 }

@@ -4,9 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -15,6 +13,8 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 @Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductoProveedorDataId implements Serializable {
     @Serial
     private static final long serialVersionUID = -5280225435741267587L;

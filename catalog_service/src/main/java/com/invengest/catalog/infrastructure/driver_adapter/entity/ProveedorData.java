@@ -3,22 +3,20 @@ package com.invengest.catalog.infrastructure.driver_adapter.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Data
-@RequiredArgsConstructor
-@NoArgsConstructor
+@lombok.Getter
+@lombok.Setter
+@lombok.NoArgsConstructor
+@lombok.AllArgsConstructor
 @Table(name = "proveedor")
 public class ProveedorData {
     @NonNull
-    @OneToMany(mappedBy = "idProveedor")
+    @OneToMany(mappedBy = "proveedor")
     private Set<ProductoProveedorData> productoProveedors = new LinkedHashSet<>();
     @Size(max = 50)
     @Column(name = "nit", length = 50)
@@ -39,9 +37,9 @@ public class ProveedorData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_proveedor", nullable = false)
-    private Integer id;
+    private Integer idProveedor;
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_estado", nullable = false)
-    private EstadoProveedorData idEstado;
+    private EstadoProveedorData estado;
 }

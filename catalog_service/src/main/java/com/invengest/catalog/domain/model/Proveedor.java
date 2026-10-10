@@ -12,7 +12,7 @@ import lombok.Setter;
 public class Proveedor {
 
     private Integer idProveedor;
-    private EstadoProveedor idEstado;
+    private EstadoProveedor estado;
     private String nombre;
     private String telefono;
     private String email;

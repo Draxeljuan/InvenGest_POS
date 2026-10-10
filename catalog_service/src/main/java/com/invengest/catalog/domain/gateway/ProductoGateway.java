@@ -10,5 +10,6 @@ public interface ProductoGateway {
     List<Producto> findBySearchCriteria(String query); // Búsqueda por múltiples criterios
     List<Producto> findLowStockProducts(); // Productos por debajo de su stock_minimo
     Producto save(Producto producto);
-    void deleteById(String idProducto);
+    boolean existsById(String idProducto);
+
 }

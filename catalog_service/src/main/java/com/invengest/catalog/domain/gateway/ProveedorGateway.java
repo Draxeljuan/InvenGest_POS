@@ -9,6 +9,5 @@ public interface ProveedorGateway {
     Optional<Proveedor> findByNit(String nit);
     List<Proveedor> findAll();
     Proveedor save(Proveedor proveedor);
-    void deleteById(Integer idProveedor);
     boolean existsProductosByProveedorId(Integer idProveedor);
 }

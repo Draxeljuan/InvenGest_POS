@@ -2,7 +2,7 @@ package com.invengest.catalog.usecase;
 
 import com.invengest.catalog.domain.gateway.EstadoProveedorGateway;
 import com.invengest.catalog.domain.model.EstadoProveedor;
-import jakarta.persistence.EntityNotFoundException;
+import com.invengest.catalog.domain.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -19,6 +19,11 @@ public class EstadoProveedorUseCase {
     public EstadoProveedor obtenerPorId(Integer id){
         return estadoProveedorGateway.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Estado de Proveedor no encontrado con el id" + id));
+    }
+
+    public EstadoProveedor obtenerPorNombre(String name){
+        return estadoProveedorGateway.findByNombre(name)
+                .orElseThrow(() -> new EntityNotFoundException("Estado de Proveedor no encontrado con el nombre" + name));
     }
 
 }

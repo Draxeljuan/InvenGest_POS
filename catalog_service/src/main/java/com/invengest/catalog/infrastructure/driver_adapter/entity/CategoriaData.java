@@ -3,18 +3,16 @@ package com.invengest.catalog.infrastructure.driver_adapter.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Data
-@RequiredArgsConstructor
-@NoArgsConstructor
+@lombok.Getter
+@lombok.Setter
+@lombok.NoArgsConstructor
+@lombok.AllArgsConstructor
 @Table(name = "categoria")
 public class CategoriaData {
     @NonNull
@@ -31,7 +29,7 @@ public class CategoriaData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_categoria", nullable = false)
-    private Integer id;
+    private Integer idCategoria;
 
 
 }

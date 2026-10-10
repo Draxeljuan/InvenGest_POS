@@ -9,5 +9,5 @@ public interface ServicioGateway {
     List<Servicio> findAll();
     List<Servicio> findByCategoriaServicioId(Integer idCategoriaServicio);
     Servicio save(Servicio servicio);
-    void deleteById(Integer idServicio);
+    boolean existsByNombre(String nombre);
 }

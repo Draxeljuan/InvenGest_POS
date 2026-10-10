@@ -3,9 +3,6 @@ package com.invengest.catalog.infrastructure.driver_adapter.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.jspecify.annotations.NonNull;
 
@@ -15,13 +12,14 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Data
-@RequiredArgsConstructor
-@NoArgsConstructor
+@lombok.Getter
+@lombok.Setter
+@lombok.NoArgsConstructor
+@lombok.AllArgsConstructor
 @Table(name = "producto")
 public class ProductoData {
     @NonNull
-    @OneToMany(mappedBy = "idProducto")
+    @OneToMany(mappedBy = "producto")
     private Set<ProductoProveedorData> productoProveedors = new LinkedHashSet<>();
     @Size(max = 100)
     @Column(name = "ubicacion", length = 100)
@@ -49,17 +47,16 @@ public class ProductoData {
     @Column(name = "nombre", nullable = false, length = 150)
     private String nombre;
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID) // Usamos UUID de momento
     @Size(max = 50)
     @Column(name = "id_producto", nullable = false, length = 50)
     private String idProducto;
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_estado", nullable = false)
-    private EstadoProductoData idEstado;
+    private EstadoProductoData estado;
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_categoria", nullable = false)
-    private CategoriaData idCategoria;
+    private CategoriaData categoria;
 
 }

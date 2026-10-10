@@ -1,5 +1,6 @@
 package com.invengest.catalog.usecase;
 
+import com.invengest.catalog.domain.exception.DuplicateEntityException;
 import com.invengest.catalog.domain.exception.EntityInUseException;
 import com.invengest.catalog.domain.exception.EntityNotFoundException;
 import com.invengest.catalog.domain.gateway.CategoriaGateway;
@@ -9,17 +10,24 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class CategoriaUseCase { // Por crear validaciones de negocio más especificas
+public class CategoriaUseCase {
 
     private final CategoriaGateway categoriaGateway;
 
     public Categoria crear(Categoria categoria) {
+        if (categoriaGateway.existsByNombre(categoria.getNombre())) {
+            throw new DuplicateEntityException("Ya existe una categoría con el nombre: " + categoria.getNombre());
+        }
         return categoriaGateway.save(categoria);
     }
 
     public Categoria actualizar(Categoria categoria) {
-        if (categoria.getIdCategoria() == null || categoriaGateway.findById(categoria.getIdCategoria()).isEmpty()) {
-            throw new EntityNotFoundException("La categoría con ID " + categoria.getIdCategoria() + " no existe.");
+        Categoria existente = categoriaGateway.findById(categoria.getIdCategoria())
+            .orElseThrow(() -> new EntityNotFoundException("La categoría con ID " + categoria.getIdCategoria() + " no existe."));
+            
+        if (!existente.getNombre().equalsIgnoreCase(categoria.getNombre()) && 
+            categoriaGateway.existsByNombre(categoria.getNombre())) {
+            throw new DuplicateEntityException("Ya existe una categoría con el nombre: " + categoria.getNombre());
         }
         return categoriaGateway.save(categoria);
     }

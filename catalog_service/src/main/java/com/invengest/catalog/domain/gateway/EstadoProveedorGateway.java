@@ -9,4 +9,5 @@ public interface EstadoProveedorGateway {
 
     Optional<EstadoProveedor> findById(Integer idEstadoProveedor);
     List<EstadoProveedor> findAll();
+    Optional<EstadoProveedor> findByNombre(String name);
 }

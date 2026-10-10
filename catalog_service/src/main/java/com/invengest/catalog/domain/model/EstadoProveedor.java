@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EstadoProveedor {
-    private Integer idEstado;
+    private Integer idEstadoProveedor;
     private String nombre;
 }

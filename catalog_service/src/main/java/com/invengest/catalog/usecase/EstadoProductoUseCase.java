@@ -2,7 +2,7 @@ package com.invengest.catalog.usecase;
 
 import com.invengest.catalog.domain.gateway.EstadoProductoGateway;
 import com.invengest.catalog.domain.model.EstadoProducto;
-import jakarta.persistence.EntityNotFoundException;
+import com.invengest.catalog.domain.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -18,6 +18,11 @@ public class EstadoProductoUseCase {
     public EstadoProducto obtenerPorId(Integer id){
         return estadoProductoGateway.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Estado de Producto no encontrado con el id" + id));
+    }
+
+    public EstadoProducto obtenerPorNombre(String name){
+        return estadoProductoGateway.findByNombre(name)
+                .orElseThrow(() -> new EntityNotFoundException("Estado de Producto no encontrado con el nombre" + name));
     }
 
 

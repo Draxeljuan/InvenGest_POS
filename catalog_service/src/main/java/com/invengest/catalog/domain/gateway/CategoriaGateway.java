@@ -8,6 +8,7 @@ public interface CategoriaGateway {
     Optional<Categoria> findById(Integer idCategoria);
     List<Categoria> findAll();
     Categoria save(Categoria categoria);
+    boolean existsByNombre(String nombre);
     void deleteById(Integer idCategoria);
     boolean existsProductosByCategoriaId(Integer idCategoria);
 }
