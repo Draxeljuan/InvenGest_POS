@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/transactions/kardex")
+@RequestMapping({"/api/transactions/kardex", "/api/transaction/kardex"})
 @RequiredArgsConstructor
 public class MovimientoInventarioController {
 

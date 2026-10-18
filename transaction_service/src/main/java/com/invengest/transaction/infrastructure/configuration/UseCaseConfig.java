@@ -15,14 +15,16 @@ public class UseCaseConfig {
             MovimientoInventarioGateway movimientoInventarioGateway,
             ClienteGateway clienteGateway,
             MetodoPagoGateway metodoPagoGateway,
-            TipoMovimientoGateway tipoMovimientoGateway) {
+            TipoMovimientoGateway tipoMovimientoGateway,
+            AnalyticsGateway analyticsGateway) {
         return new RegistrarVentaUseCase(
                 ventaGateway,
                 catalogGateway,
                 movimientoInventarioGateway,
                 clienteGateway,
                 metodoPagoGateway,
-                tipoMovimientoGateway
+                tipoMovimientoGateway,
+                analyticsGateway
         );
     }
 

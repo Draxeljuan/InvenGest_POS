@@ -14,8 +14,12 @@ public class UseCaseConfig {
     }
 
     @Bean
-    public ProductoUseCase productoUseCase(ProductoGateway productoGateway, EstadoProductoGateway estadoProductoGateway, CategoriaGateway categoriaGateway) {
-        return new ProductoUseCase(productoGateway, estadoProductoGateway, categoriaGateway);
+    public ProductoUseCase productoUseCase(
+            ProductoGateway productoGateway,
+            EstadoProductoGateway estadoProductoGateway,
+            CategoriaGateway categoriaGateway,
+            AnalyticsGateway analyticsGateway) {
+        return new ProductoUseCase(productoGateway, estadoProductoGateway, categoriaGateway, analyticsGateway);
     }
 
     @Bean

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "catalog-service", url = "${catalog.service.url}")
+@FeignClient(name = "catalog-service", url = "${catalog.service.url:http://localhost:8082}")
 public interface CatalogFeignClient {
 
     @GetMapping("/api/catalog/productos/{id}")

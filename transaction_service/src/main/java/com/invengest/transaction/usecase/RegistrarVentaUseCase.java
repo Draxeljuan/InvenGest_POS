@@ -21,6 +21,7 @@ public class RegistrarVentaUseCase {
     private final ClienteGateway clienteGateway;
     private final MetodoPagoGateway metodoPagoGateway;
     private final TipoMovimientoGateway tipoMovimientoGateway;
+    private final AnalyticsGateway analyticsGateway;
 
     private static final int ID_TIPO_MOVIMIENTO_SALIDA_VENTA = 2;
     private static final String NOMBRE_MOVIMIENTO_SALIDA_VENTA = "Salida por Venta";
@@ -44,6 +45,11 @@ public class RegistrarVentaUseCase {
         Venta ventaGuardada = ventaGateway.save(venta);
 
         procesarActualizacionStockYKardex(ventaGuardada, detallesProcesados);
+
+        if (ventaGuardada.getDetalles() == null || ventaGuardada.getDetalles().isEmpty()) {
+            ventaGuardada.setDetalles(detallesProcesados);
+        }
+        analyticsGateway.notificarVenta(ventaGuardada);
 
         return ventaGuardada;
     }

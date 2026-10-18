@@ -1,6 +1,7 @@
 package com.invengest.catalog.usecase;
 
 import com.invengest.catalog.domain.exception.EntityNotFoundException;
+import com.invengest.catalog.domain.gateway.AnalyticsGateway;
 import com.invengest.catalog.domain.gateway.CategoriaGateway;
 import com.invengest.catalog.domain.gateway.EstadoProductoGateway;
 import com.invengest.catalog.domain.gateway.ProductoGateway;
@@ -17,6 +18,7 @@ public class ProductoUseCase {
     private final ProductoGateway productoGateway;
     private final EstadoProductoGateway estadoProductoGateway;
     private final CategoriaGateway categoriaGateway;
+    private final AnalyticsGateway analyticsGateway;
 
     private final Random random = new Random();
 
@@ -25,7 +27,9 @@ public class ProductoUseCase {
         
         producto.setIdProducto(generarIdProducto());
         
-        return productoGateway.save(producto);
+        Producto productoGuardado = productoGateway.save(producto);
+        analyticsGateway.notificarEstadoStock(productoGuardado);
+        return productoGuardado;
     }
 
     public Producto actualizar(Producto producto) {
@@ -33,7 +37,9 @@ public class ProductoUseCase {
             throw new EntityNotFoundException("El producto con código " + producto.getIdProducto() + " no existe.");
         }
         validarInvariantes(producto);
-        return productoGateway.save(producto);
+        Producto productoGuardado = productoGateway.save(producto);
+        analyticsGateway.notificarEstadoStock(productoGuardado);
+        return productoGuardado;
     }
 
     private void validarInvariantes(Producto producto) {
@@ -94,7 +100,9 @@ public class ProductoUseCase {
             producto.setEstado(estadoAgotado);
         }
 
-        return productoGateway.save(producto);
+        Producto productoGuardado = productoGateway.save(producto);
+        analyticsGateway.notificarEstadoStock(productoGuardado);
+        return productoGuardado;
     }
 
     public void eliminacionLogica(String idProducto) {

@@ -26,6 +26,21 @@ spring:
           predicates:
             - Path=/api/auth/**
 
+        - id: catalog-service
+          uri: http://${CATALOG_SERVICE_HOST:localhost}:${CATALOG_SERVICE_PORT:8082}
+          predicates:
+            - Path=/api/catalog/**
+
+        - id: transaction-service
+          uri: http://${TRANSACTION_SERVICE_HOST:localhost}:${TRANSACTION_SERVICE_PORT:8083}
+          predicates:
+            - Path=/api/transaction/**, /api/transactions/**
+
+        - id: analytics-service
+          uri: http://${ANALYTICS_SERVICE_HOST:localhost}:${ANALYTICS_SERVICE_PORT:8084}
+          predicates:
+            - Path=/api/analytics/**
+
 # Clave secreta para validar el token
 jwt:
   secret: ${JWT_SECRET}

@@ -1,6 +1,7 @@
 package com.invengest.catalog.usecase;
 
 import com.invengest.catalog.domain.exception.EntityNotFoundException;
+import com.invengest.catalog.domain.gateway.AnalyticsGateway;
 import com.invengest.catalog.domain.gateway.CategoriaGateway;
 import com.invengest.catalog.domain.gateway.EstadoProductoGateway;
 import com.invengest.catalog.domain.gateway.ProductoGateway;
@@ -33,6 +34,9 @@ class ProductoUseCaseTest {
     @Mock
     private CategoriaGateway categoriaGateway;
 
+    @Mock
+    private AnalyticsGateway analyticsGateway;
+
     @InjectMocks
     private ProductoUseCase productoUseCase;
 
@@ -62,6 +66,7 @@ class ProductoUseCaseTest {
         assertNotNull(registrado.getIdProducto());
         assertTrue(registrado.getIdProducto().startsWith("PROD-"));
         verify(productoGateway, times(1)).save(any(Producto.class));
+        verify(analyticsGateway, times(1)).notificarEstadoStock(registrado);
     }
 
     @Test
@@ -91,6 +96,7 @@ class ProductoUseCaseTest {
         Producto actualizado = productoUseCase.descontarStock("PROD-1234", 3);
 
         assertEquals(7, actualizado.getStock());
+        verify(analyticsGateway).notificarEstadoStock(actualizado);
     }
 
     @Test
@@ -105,5 +111,6 @@ class ProductoUseCaseTest {
 
         assertEquals(0, actualizado.getStock());
         assertEquals("Agotado", actualizado.getEstado().getNombre());
+        verify(analyticsGateway).notificarEstadoStock(actualizado);
     }
 }

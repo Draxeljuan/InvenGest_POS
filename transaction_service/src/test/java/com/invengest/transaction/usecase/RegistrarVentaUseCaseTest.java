@@ -44,6 +44,9 @@ class RegistrarVentaUseCaseTest {
     @Mock
     private TipoMovimientoGateway tipoMovimientoGateway;
 
+    @Mock
+    private AnalyticsGateway analyticsGateway;
+
     @InjectMocks
     private RegistrarVentaUseCase registrarVentaUseCase;
 
@@ -107,6 +110,9 @@ class RegistrarVentaUseCaseTest {
 
         // Verificación de comunicación con CatalogService para descontar stock
         verify(catalogGateway).descontarStock("PROD-001", 2);
+
+        // Verificación de notificación a AnalyticsService
+        verify(analyticsGateway).notificarVenta(resultado);
 
         // Verificación de registro físico en Kardex
         ArgumentCaptor<MovimientoInventario> movimientoCaptor = ArgumentCaptor.forClass(MovimientoInventario.class);
