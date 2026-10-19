@@ -1,11 +1,9 @@
 package com.invengest.auth.infrastructure.security;
 
-import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,45 +17,36 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
-@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtProviderAdapter jwtProvider;
+    private static final String HEADER_USER_ID = "X-User-Id";
+    private static final String HEADER_USER_NAME = "X-User-Name";
+    private static final String HEADER_USER_ROLE = "X-User-Role";
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-        String authHeader = request.getHeader("Authorization");
+        String username = request.getHeader(HEADER_USER_NAME);
+        String role = request.getHeader(HEADER_USER_ROLE);
+        String userId = request.getHeader(HEADER_USER_ID);
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
+        if (username != null && !username.isBlank()
+                && role != null && !role.isBlank()
+                && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            if (jwtProvider.validateToken(token)) {
-                try {
-                    Claims claims = jwtProvider.getClaimsFromToken(token);
-                    String username = claims.getSubject();
-                    // Extraemos el rol que guardamos al hacer el login
-                    String role = claims.get("role", String.class);
+            List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role));
 
-                    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                        // Spring Security requiere que la autoridad coincida exactamente con lo del hasAuthority()
-                        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role));
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                    username,
+                    userId,
+                    authorities
+            );
+            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                                username,
-                                null,
-                                authorities
-                        );
-                        authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                        // Inyectamos el usuario validado en el contexto de seguridad
-                        SecurityContextHolder.getContext().setAuthentication(authToken);
-                    }
-                } catch (Exception e) {
-                    SecurityContextHolder.clearContext();
-                }
-            }
+            SecurityContextHolder.getContext().setAuthentication(authToken);
         }
 
         filterChain.doFilter(request, response);

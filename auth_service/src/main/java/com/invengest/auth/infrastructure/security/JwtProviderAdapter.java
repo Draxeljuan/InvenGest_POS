@@ -2,7 +2,6 @@ package com.invengest.auth.infrastructure.security;
 
 import com.invengest.auth.domain.gateway.TokenProviderGateway;
 import com.invengest.auth.domain.model.User;
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,24 +37,5 @@ public class JwtProviderAdapter implements TokenProviderGateway {
                 .expiration(expiryDate)
                 .signWith(getSigningKey())
                 .compact();
-    }
-
-    // Metodo para extraer el contenido (Payload) del token
-    public Claims getClaimsFromToken(String token) {
-        return Jwts.parser()
-                .verifyWith(getSigningKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
-    }
-
-    // Metodo para validar si la firma es correcta y no ha expirado
-    public boolean validateToken(String token) {
-        try {
-            getClaimsFromToken(token);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
     }
 }
